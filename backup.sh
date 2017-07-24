@@ -22,7 +22,7 @@ else
     mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2 $BACKUP:/ /mnt/backup
 fi
 
-DIRECTORIES=$(find /mnt/source/* -maxdepth 0 -type d -print)
+DIRECTORIES=$(find /mnt/source/* -maxdepth 0  ! -name "*.beforeRestore" ! -name "*.tempRestore" -type d -print)
 REPOSITORIES="/mnt/backup/$REPO"
 mkdir -p $REPOSITORIES
 
