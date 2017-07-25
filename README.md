@@ -44,3 +44,5 @@ With:
  ## Notes
 
  **EFS**'s bill is based on the stored data volume (price per gygabyte). Costs due to data transfer may also exist. Of course, I can't be held responsible for any cost related to the use of this container.
+
+ To be able to mount the **EFS** filesystem, the container may need to be run in *privileged* mode, or with the option `--cap-add SYS_ADMIN`.
