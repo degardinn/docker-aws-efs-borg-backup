@@ -1,12 +1,12 @@
 # EFS Borg Backup Docker image
 
-[`degardinn/efs-borg-backup`](https://hub.docker.com/r/degardinn/efs-borg-backup/)
+[`ndegardin/efs-borg-backup`](https://hub.docker.com/r/ndegardin/efs-borg-backup/)
 
 A container that backups the content of an [AWS EFS](https://aws.amazon.com/efs/) cluster to another [AWS EFS](https://aws.amazon.com/efs/) cluster using the [Borg backup](https://borgbackup.readthedocs.io/) tool.
 
 This container is meant to be run on a daily basis. Its backups are incremental, encrypted and compressed.
 
-Although not mandatory, this image is designed to be used with its counterpart, [`degardinn/efs-borg-restore`](https://hub.docker.com/r/degardinn/efs-borg-backup/) (hence some technical choices).
+Although not mandatory, this image is designed to be used with its counterpart, [`ndegardin/efs-borg-restore`](https://hub.docker.com/r/ndegardin/efs-borg-restore/) (hence some technical choices).
 
 ## Features
 
