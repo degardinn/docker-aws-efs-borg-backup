@@ -1,12 +1,12 @@
 # EFS Borg Backup Docker image
 
-[`ndegardin/efs-borg-backup`](https://hub.docker.com/r/ndegardin/efs-borg-backup/)
+[`ndegardin/aws-efs-borg-backup`](https://hub.docker.com/r/ndegardin/aws-efs-borg-backup/)
 
 A container that backups the content of an [AWS EFS](https://aws.amazon.com/efs/) cluster to another [AWS EFS](https://aws.amazon.com/efs/) cluster using the [Borg backup](https://borgbackup.readthedocs.io/) tool.
 
 This container is meant to be run on a daily basis. Its backups are incremental, encrypted and compressed.
 
-Although not mandatory, this image is designed to be used with its counterpart, [`ndegardin/efs-borg-restore`](https://hub.docker.com/r/ndegardin/efs-borg-restore/) (hence some technical choices).
+Although not mandatory, this image is designed to be used with its counterpart, [`ndegardin/aws-efs-borg-restore`](https://hub.docker.com/r/ndegardin/aws-efs-borg-restore/) (hence some technical choices).
 
 ## Features
 
@@ -41,8 +41,11 @@ With:
  - `weekly retention`: backup archives to keep. 4 weekly archives to keep per default
  - `monthly retention`: backup archives to keep. 6 monthly archives to keep per default
 
- ## Notes
+## Notes
 
- **EFS**'s bill is based on the stored data volume (price per gygabyte). Costs due to data transfer may also exist. Of course, I can't be held responsible for any cost related to the use of this container.
+**EFS**'s bill is based on the stored data volume (price per gygabyte). Costs due to data transfer may also exist. Of course, I can't be held responsible for any cost related to the use of this container.
 
- To be able to mount the **EFS** filesystem, the container may need to be run in *privileged* mode, or with the option `--cap-add SYS_ADMIN`.
+To be able to mount the **EFS** filesystem, the container may need to be run in *privileged* mode, or with the option `--cap-add SYS_ADMIN`.
+
+This container is primarily designed to be run as a scheduled task, launched every day, in an **ECS** cluster. However, please be aware that the process of backuping filesystems for the first take may take a long time, so if 24 hours are not enough to backup the whole data, the new task could interrupt the previous one (because it breaks the locks of the archives, incase they were stuck for any reason).
+We have experimented this behavior with a directory weighing about 300Gb, and in this case, it is recommended to run the backup task for the first time manually (or not scheduled to run every day). Of course the speed of the backup process is also dependent on the characteristics of the machine where the backup task runs.
